@@ -1,0 +1,15 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.board-container {
+    position: absolute;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 25px;
+}
