@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/main.css">
+    <title>Mine-Sweeper</title>
+</head>
+
+<body onload="init(true)">
+    <h1>Mine Sweeper</h1>
+    <div class="modal-game-over">
+        <h1>Game Over</h1>
+    </div>
+    <div class="state">
+        <div class="difficulty">
+            <span class="difficultyButten">easy(4)</span>
+            <input type="radio" name="radio" checked onclick="selcectLeval(0)">
+            <span class="difficultyButten">normal(8)</span>
+            <input type="radio" name="radio" onclick="selcectLeval(1)">
+            <span class="difficultyButten">hard(12)</span>
+            <input type="radio" name="radio" onclick="selcectLeval(2)">
+        </div>
+        <button class="new-game" onclick="init()"></button>
+        <div class="timer">0 m 0 s</div>
+        <div class="flags">🚩</div>
+    </div>
+    <div class="board-container"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/click-move.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+
+</html>
