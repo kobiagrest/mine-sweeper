@@ -1,19 +1,3 @@
-
-// location such as: {i: 2, j: 7}
-
-// function countNeighbors(cellI, cellJ, board, value) {
-//   var negsCount = 0;
-//   for (var i = cellI - 1; i <= cellI + 1; i++) {
-//     if (i < 0 || i >= board.length) continue;
-//     for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-//       if (j < 0 || j >= board[i].length) continue;
-//       if (i === cellI && j === cellJ) continue;
-//       if (board[i][j] === value) negsCount++;
-//     }
-//     return negsCount;
-//   }
-// }
-
 function printContentBoard(board) {
   var newBoard = [];
   for (var i = 0; i < board.length; i++) {
@@ -23,16 +7,6 @@ function printContentBoard(board) {
     }
   }
   console.table(newBoard);
-}
-function copyMatOnePropety(mat, propety) {
-  var newMat = [];
-  for (var i = 0; i < mat.length; i++) {
-    newMat[i] = [];
-    for (var j = 0; j < mat[0].length; j++) {
-      newMat[i][j] = mat[i][j].propety;
-    }
-  }
-  return newMat;
 }
 
 function drawLocation(locations) {
@@ -48,7 +22,6 @@ function resetLocations(board) {
     }
     shuffle(locations);
   }
-  // console.log('locations:',locations)
   return locations;
 }
 
@@ -81,4 +54,32 @@ function disContextMenu(selector) {
   elnoContext.addEventListener(`contextmenu`, e => {
     e.preventDefault();
   })
+}
+
+
+function renderCell(i, j, content, elCell) {
+  // Select the elCell and set the value
+  if (!elCell) {
+      var elCell = document.querySelector(`.cell-${i}-${j}`);
+  }
+  elCell.innerHTML = content;
+}
+
+function startTimer (selector){
+  var el = document.querySelector(selector);
+  var countDownDate = new Date();
+  var cuntUpTimerIntreval = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = now - countDownDate.getTime();
+    
+      // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      // var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+      var strTimer =`${minutes} m ${seconds} s`;
+      
+      el.innerHTML = strTimer;
+    }, 1000);
+    return cuntUpTimerIntreval;
 }
