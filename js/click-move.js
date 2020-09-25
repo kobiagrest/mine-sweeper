@@ -1,7 +1,7 @@
 function rigthCellClicked(elCell, i, j) {
     if (!gTimerInterval) gTimerInterval = startTimer('.timer');
     if (gGame.isOn === false) return;
-    
+
     var cellClicked = gBoard[i][j];
     var content = '';
     if (cellClicked.isShown) return;
@@ -9,8 +9,10 @@ function rigthCellClicked(elCell, i, j) {
         cellClicked.isMarked = true;
         content = MARK;
         gGame.markedCount++;
-        renderCountMarked ()
-        console.log('cellClicked',cellClicked) //למחוק
+        renderCountMarked()
+        // console.log('gGame.markedCount',gGame.markedCount)
+        console.log('cellClicked', cellClicked) //למחוק
+        // console.log('gGame.rigthMarkedCount',gGame.rigthMarkedCount)
 
         if (cellClicked.isMine === true) {
             gGame.rigthMarkedCount++;
@@ -24,7 +26,11 @@ function rigthCellClicked(elCell, i, j) {
         content = HIDE;
         cellClicked.isMarked = false;
         gGame.markedCount--;
-        renderCountMarked ()
+        renderCountMarked()
+        // console.log('gGame.markedCount',gGame.markedCount)
+        console.log('cellClicked', cellClicked) //למחוק
+        // console.log('gGame.rigthMarkedCount',gGame.rigthMarkedCount)
+        
 
         if (cellClicked.isMine === true) {
             gGame.rigthMarkedCount--;
@@ -34,10 +40,10 @@ function rigthCellClicked(elCell, i, j) {
 
 }
 
-function renderCountMarked (){
+function renderCountMarked() {
     var elFlags = document.querySelector('.flags');
     var countFlags = gLevel.MINES - gGame.markedCount;
-    elFlags.innerHTML =`🚩 ${countFlags}`;
+    elFlags.innerHTML = `🚩 ${countFlags}`;
 }
 
 
@@ -48,6 +54,14 @@ function cellClicked(elCell, i, j) {
     if (gGame.isOn === false) return;
 
     var cellClicked = gBoard[i][j];
+
+
+    if (gIsFirstClick === true) {
+        if (cellClicked.isMarked) return;
+        onFirstClick(elCell, i, j);
+        return;
+    }
+
     if (cellClicked.isMarked === true || cellClicked.isShown === true) return;
     if (cellClicked.isMine === true) {
         gameOver(i, j, cellClicked, elCell);
@@ -55,7 +69,7 @@ function cellClicked(elCell, i, j) {
     }
     cellClicked.isShown = true;
     gGame.shownCount++;
-
+    console.log('gGame.shownCount',gGame.shownCount)
     var content = cellClicked.minesAroundCount;
     if (cellClicked.minesAroundCount === 0) content = LONE;
     renderCell(i, j, content, elCell);
@@ -89,6 +103,7 @@ function expandShown(board, elCell, rowIdx, colIdx) {
             if (currCell.isShown === true || currCell.isMarked === true) continue;
             currCell.isShown = true;
             gGame.shownCount++;
+            console.log('gGame.shownCount',gGame.shownCount)
 
             if (isVictory(gBoard)) {
                 var elCurrCell = document.querySelector(`.cell-${i}-${j}`);

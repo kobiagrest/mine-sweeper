@@ -19,8 +19,11 @@ var gLevel;
 var gMinesLocations;
 var gTimerInterval;
 
+var gIsFirstClick;
+
 function init(isOnLoadInit) {
     closemodal()
+    gIsFirstClick = true;
     if (isOnLoadInit) {
         gLevel = GLEVELS[0];
     }
@@ -33,15 +36,26 @@ function init(isOnLoadInit) {
         secsPassed: 0,
     }
     resetTimer()
-    gMinesLocations = setMines(gLevel.MINES);
+    changeSmiley('😃')
+    renderBoard(gBoard, '.board-container')
+    disContextMenu('.board-container');
+}
+
+function onFirstClick (elCell,i,j){
+    gIsFirstClick = false;
+
+    gMinesLocations = setMines(gLevel.MINES,i,j);
     console.table(gBoard)
     setMinesNegsCount(gBoard);
     renderBoard(gBoard, '.board-container')
     printContentBoard(gBoard)
-    disContextMenu('.board-container');
-    changeSmiley('😃')
     renderCountMarked ()
+    var cellAfterRender = gBoard[i][j];
+    var elNewCell= document.querySelector(`.cell-${i}-${j}`)
+
+    cellClicked(elNewCell, i, j);
 }
+
 
 function selcectLeval(idx) {
     gLevel = GLEVELS[idx];
@@ -80,7 +94,8 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             var currCell = mat[i][j];
             var className = `cell cell-${i}-${j}`;
-            var content = HIDE;
+            
+            var content = (currCell.isMarked) ? MARK : HIDE;
 
             // strHTML += `<td class="${className}">${currCell.minesAroundCount}</td>`
             if (currCell.isMine) className += ' mine';
@@ -132,8 +147,8 @@ function countNeighbors(board, rowIdx, colIdx) {
     return negsCount;
 }
 
-function setMines(amount) {
-    var locations = resetLocations(gBoard)
+function setMines(amount,rowIdx,colIdx) {
+    var locations = resetLocations(gBoard,rowIdx,colIdx)
     var minesLocations = [];
     for (var i = 0; i < amount; i++) {
         var rndLocation = drawLocation(locations);
@@ -141,6 +156,7 @@ function setMines(amount) {
         var currCell = gBoard[rndLocation.i][rndLocation.j];
         currCell.isMine = true;
         currCell.minesAroundCount = 'M';
+        if (currCell.isMarked) gGame.rigthMarkedCount++;
         renderBoard(gBoard, '.board-container')
     }
     return minesLocations;

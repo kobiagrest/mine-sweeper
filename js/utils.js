@@ -12,11 +12,13 @@ function printContentBoard(board) {
 function drawLocation(locations) {
   return locations.shift();
 }
+//resetLocations(gBoard,rowIdx,colIdx)
 
-function resetLocations(board) {
+function resetLocations(board,rowIdx,colIdx) {
   var locations = []; 
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[0].length; j++) {
+      if(i===rowIdx && j===colIdx) continue;
       var currLocation = { i: i, j: j };
       locations .push(currLocation);
     }
