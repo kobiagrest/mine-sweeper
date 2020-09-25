@@ -18,8 +18,8 @@ var gGame;
 var gLevel;
 var gMinesLocations;
 var gTimerInterval;
-
 var gIsFirstClick;
+var gLives;
 
 function init(isOnLoadInit) {
     closemodal()
@@ -39,6 +39,7 @@ function init(isOnLoadInit) {
     changeSmiley('😃')
     renderBoard(gBoard, '.board-container')
     disContextMenu('.board-container');
+    renderCountMarked ()
 }
 
 function onFirstClick (elCell,i,j){
@@ -56,9 +57,9 @@ function onFirstClick (elCell,i,j){
     cellClicked(elNewCell, i, j);
 }
 
-
 function selcectLeval(idx) {
     gLevel = GLEVELS[idx];
+    init();
 }
 
 function resetTimer() {
