@@ -19,7 +19,8 @@ var gLevel;
 var gMinesLocations;
 var gTimerInterval;
 var gIsFirstClick;
-var gLives;
+var gLive;
+var gElLives = document.querySelector('.lives');
 
 function init(isOnLoadInit) {
     closemodal()
@@ -35,24 +36,26 @@ function init(isOnLoadInit) {
         rigthMarkedCount: 0,
         secsPassed: 0,
     }
+    gLive = 3;
+    resetLives()
     resetTimer()
     changeSmiley('😃')
     renderBoard(gBoard, '.board-container')
     disContextMenu('.board-container');
-    renderCountMarked ()
+    renderCountMarked()
 }
 
-function onFirstClick (elCell,i,j){
+function onFirstClick(elCell, i, j) {
     gIsFirstClick = false;
 
-    gMinesLocations = setMines(gLevel.MINES,i,j);
+    gMinesLocations = setMines(gLevel.MINES, i, j);
     console.table(gBoard)
     setMinesNegsCount(gBoard);
     renderBoard(gBoard, '.board-container')
     printContentBoard(gBoard)
-    renderCountMarked ()
+    renderCountMarked()
     var cellAfterRender = gBoard[i][j];
-    var elNewCell= document.querySelector(`.cell-${i}-${j}`)
+    var elNewCell = document.querySelector(`.cell-${i}-${j}`)
 
     cellClicked(elNewCell, i, j);
 }
@@ -95,7 +98,7 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             var currCell = mat[i][j];
             var className = `cell cell-${i}-${j}`;
-            
+
             var content = (currCell.isMarked) ? MARK : HIDE;
 
             // strHTML += `<td class="${className}">${currCell.minesAroundCount}</td>`
@@ -148,8 +151,8 @@ function countNeighbors(board, rowIdx, colIdx) {
     return negsCount;
 }
 
-function setMines(amount,rowIdx,colIdx) {
-    var locations = resetLocations(gBoard,rowIdx,colIdx)
+function setMines(amount, rowIdx, colIdx) {
+    var locations = resetLocations(gBoard, rowIdx, colIdx)
     var minesLocations = [];
     for (var i = 0; i < amount; i++) {
         var rndLocation = drawLocation(locations);
@@ -165,10 +168,30 @@ function setMines(amount,rowIdx,colIdx) {
 
 
 
-
+function resetLives(){
+    var strHTML = '';
+    for (var i = 0; i < gLive; i++) {
+        strHTML += '❤️';
+    }
+    gElLives.innerHTML = strHTML;
+}
 
 function gameOver(i, j, cellClicked, elCell) {
     gGame.isOn = false;
+    // var gElLives = document.querySelector('.lives');
+    if (gLive > 1) {
+        var content = MINE;
+        renderCell(i, j, content);
+        setTimeout(function () {
+            content = HIDE;
+            renderCell(i, j, content);
+            gGame.isOn = true;
+        }, 1000)
+        gLive--;
+        resetLives()
+        return;
+    }
+    gElLives.innerHTML = '';
     resetTimer();
     gMinesLocations.indexOf()
     revealeMines();
@@ -215,8 +238,8 @@ function closemodal() {
     elModal.style.display = 'none';
 }
 
-function changeSmiley(smiley){
-var elNewButton = document.querySelector('.new-game');
-elNewButton.innerHTML = smiley;
+function changeSmiley(smiley) {
+    var elNewButton = document.querySelector('.new-game');
+    elNewButton.innerHTML = smiley;
 }
 

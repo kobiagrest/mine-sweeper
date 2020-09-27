@@ -55,6 +55,20 @@ h1 {
     padding-top: 5px;
 }
 
+.lives{
+    position: relative;
+    /* background-color: rgb(208, 199, 60); */
+    /* border-style: solid; */
+    /* border-radius: 10%; */
+    font-size: 30px;
+    width: 130px;
+    height: 36px;
+    left: 380px;
+    bottom: 120px;
+    padding-top: 5px;
+}
+
+
 .board-container {
     position: relative;
     margin: auto;
