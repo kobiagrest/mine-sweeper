@@ -4,6 +4,7 @@ console.log('hello mine sweeper');
 
 // var gNum = 0;
 
+const SAFE = '✔️';
 const HIDE = '';
 const MINE = '💣';
 const LONE = '🌳';
@@ -17,10 +18,15 @@ var gBoard;
 var gGame;
 var gLevel;
 var gMinesLocations;
+var gNumsLocations;
 var gTimerInterval;
 var gIsFirstClick;
 var gLive;
 var gElLives = document.querySelector('.lives');
+var gSafeClick;
+var gElSafeClick = document.querySelector('.safe-click span');
+var gHint;
+var gElHint = document.querySelector('.hint span');
 
 function init(isOnLoadInit) {
     closemodal()
@@ -35,9 +41,14 @@ function init(isOnLoadInit) {
         markedCount: 0,
         rigthMarkedCount: 0,
         secsPassed: 0,
+        isHint: false,
     }
     gLive = 3;
     resetLives()
+    gSafeClick = 3;
+    gElSafeClick.innerHTML = 3;
+    gHint = 3;
+    gElHint.innerHTML = 3;
     resetTimer()
     changeSmiley('😃')
     renderBoard(gBoard, '.board-container')
@@ -49,7 +60,8 @@ function onFirstClick(elCell, i, j) {
     gIsFirstClick = false;
 
     gMinesLocations = setMines(gLevel.MINES, i, j);
-    console.table(gBoard)
+    console.table(gBoard);
+    gNumsLocations = [];
     setMinesNegsCount(gBoard);
     renderBoard(gBoard, '.board-container')
     printContentBoard(gBoard)
@@ -130,6 +142,7 @@ function setMinesNegsCount(board) {
             var currCount = countNeighbors(board, i, j);
             var currCell = board[i][j];
             if (currCell.minesAroundCount === 'M') continue;
+            gNumsLocations.push({ i: i, j: j });
             currCell.minesAroundCount = currCount;
         }
     }
@@ -168,7 +181,7 @@ function setMines(amount, rowIdx, colIdx) {
 
 
 
-function resetLives(){
+function resetLives() {
     var strHTML = '';
     for (var i = 0; i < gLive; i++) {
         strHTML += '❤️';
@@ -243,3 +256,85 @@ function changeSmiley(smiley) {
     elNewButton.innerHTML = smiley;
 }
 
+function safeClick() {
+    if (gGame.isOn === false) return;
+    if (gSafeClick > 0) {
+        gGame.isOn = false;
+        var elSafeClick = document.querySelector('.safe-click');
+        elSafeClick.classList.add('click-on')
+        var rndLocation;
+        if (!gNumsLocations) {
+            rndLocation = getRndLocation(gBoard);
+        } else {
+            shuffle(gNumsLocations);
+            for (var l = 0; l < gNumsLocations.length; l++) {
+                var currLocation = gNumsLocations[l];
+                var currCell = gBoard[currLocation.i][currLocation.j];
+                if (currCell.isShown) continue;
+                rndLocation = currLocation; break;
+            }
+        }
+        // var elCell = document.querySelector(`cell-${i}-${j}`);
+        var content = SAFE;
+        renderCell(rndLocation.i, rndLocation.j, content);
+        setTimeout(function () {
+            gGame.isOn = true;
+            renderCell(rndLocation.i, rndLocation.j, HIDE);
+            var elSafeClick = document.querySelector('.safe-click');
+            elSafeClick.classList.remove('click-on')
+        }
+            , 1000
+        )
+        gSafeClick--;
+        gElSafeClick.innerHTML = gSafeClick;
+        // console.log('gNumsLocations', gNumsLocations)
+
+    }
+}
+
+function isHint() {
+    if (gGame.isOn === false) return;
+    if (gIsFirstClick === true) return;
+    if (gHint > 0) gGame.isHint = true;
+    var elHint = document.querySelector('.hint');
+    elHint.classList.add('click-on')
+}
+
+function getHint(elCell, rowIdx, colIdx) {
+    gGame.isHint = false;
+    gGame.isOn = false;
+
+    var content = 0;
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (j < 0 || j >= gBoard[0].length) continue;
+            var currCell = gBoard[i][j];
+            if (currCell.isShown) continue;
+
+            if (currCell.isMine) content = MINE;
+            else if (currCell.minesAroundCount > 0) content = currCell.minesAroundCount;
+            else content = LONE;
+            renderCell(i, j, content);
+        }
+    }
+    setTimeout(function () {
+        for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+            if (i < 0 || i >= gBoard.length) continue;
+            for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+                if (j < 0 || j >= gBoard[0].length) continue;
+                var currCell = gBoard[i][j];
+                if (currCell.isShown) continue;
+                renderCell(i, j, HIDE);
+            }
+        }
+        var elHint = document.querySelector('.hint');
+        elHint.classList.remove('click-on')
+        gGame.isOn = true;
+    }
+        , 1000
+    )
+    gHint--;
+    gElHint.innerHTML = gHint;
+
+}

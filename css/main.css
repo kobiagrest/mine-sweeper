@@ -68,6 +68,45 @@ h1 {
     padding-top: 5px;
 }
 
+.safe-click{
+    position: relative;
+    background-color: rgb(208, 199, 60);
+    border-style: solid;
+    border-radius: 50%;
+    width: 60px;
+    height: 35px;
+    left: 130px;
+    bottom: 159px;
+    padding-top: 5px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.safe-click span{
+    font-size: large;
+}
+
+.hint{
+    position: relative;
+    background-color: rgb(208, 199, 60);
+    border-style: solid;
+    border-radius: 50%;
+    width: 60px;
+    height: 35px;
+    left: 220px;
+    bottom: 205px;
+    padding-top: 5px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.hint span{
+    font-size: large;
+}
+
+.click-on{
+    background-color:red;
+}
 
 .board-container {
     position: relative;

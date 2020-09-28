@@ -48,10 +48,12 @@ function renderCountMarked() {
 
 
 
-
 function cellClicked(elCell, i, j) {
     if (!gTimerInterval) gTimerInterval = startTimer('.timer', true);
     if (gGame.isOn === false) return;
+    if (gGame.isHint === true){
+        getHint(elCell,i,j); return;
+    } 
 
     var cellClicked = gBoard[i][j];
 
@@ -69,7 +71,6 @@ function cellClicked(elCell, i, j) {
     }
     cellClicked.isShown = true;
     gGame.shownCount++;
-    console.log('gGame.shownCount',gGame.shownCount)
     var content = cellClicked.minesAroundCount;
     if (cellClicked.minesAroundCount === 0) content = LONE;
     renderCell(i, j, content, elCell);
@@ -103,7 +104,6 @@ function expandShown(board, elCell, rowIdx, colIdx) {
             if (currCell.isShown === true || currCell.isMarked === true) continue;
             currCell.isShown = true;
             gGame.shownCount++;
-            console.log('gGame.shownCount',gGame.shownCount)
 
             if (isVictory(gBoard)) {
                 var elCurrCell = document.querySelector(`.cell-${i}-${j}`);
