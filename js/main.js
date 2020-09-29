@@ -301,6 +301,7 @@ function isHint() {
 }
 
 function getHint(elCell, rowIdx, colIdx) {
+    if (gBoard[rowIdx][colIdx].isShown === true || gBoard[rowIdx][colIdx].isMarked === true) return;
     gGame.isHint = false;
     gGame.isOn = false;
 
