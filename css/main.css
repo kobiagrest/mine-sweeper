@@ -31,6 +31,12 @@ h1 {
     font-size: 20px;
 }
 
+
+.new-game:hover {
+    cursor: pointer;;
+}
+
+
 .timer {
     position: relative;
     background-color: rgb(208, 199, 60);
@@ -82,6 +88,10 @@ h1 {
     font-size: 13px;
 }
 
+.safe-click:hover {
+    cursor: pointer;;
+}
+
 .safe-click span{
     font-size: large;
 }
@@ -98,6 +108,10 @@ h1 {
     padding-top: 5px;
     text-align: center;
     font-size: 13px;
+}
+
+.hint:hover {
+    cursor: pointer;;
 }
 
 .hint span{
@@ -124,6 +138,10 @@ table {
     height: 40px;
     text-align: center;
     font-size: 25px;
+}
+
+.cell:hover {
+    cursor: pointer;;
 }
 
 /* .has-negs-{
