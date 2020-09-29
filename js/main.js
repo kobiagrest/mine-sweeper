@@ -270,7 +270,7 @@ function safeClick() {
         } else {
             for (var l = 0; l < gNumsLocations.length; l++) {
                 shuffle(gNumsLocations);
-                var currLocation = gNumsLocations[l];
+                var currLocation = gNumsLocations.shift();
                 var currCell = gBoard[currLocation.i][currLocation.j];
                 if (currCell.isShown) continue;
                 rndLocation = currLocation; break;
