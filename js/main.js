@@ -49,6 +49,8 @@ function init(isOnLoadInit) {
     gElSafeClick.innerHTML = 3;
     gHint = 3;
     gElHint.innerHTML = 3;
+    var elHint = document.querySelector('.hint');
+        elHint.classList.remove('click-on')
     resetTimer()
     changeSmiley('😃')
     renderBoard(gBoard, '.board-container')
@@ -266,8 +268,8 @@ function safeClick() {
         if (!gNumsLocations) {
             rndLocation = getRndLocation(gBoard);
         } else {
-            shuffle(gNumsLocations);
             for (var l = 0; l < gNumsLocations.length; l++) {
+                shuffle(gNumsLocations);
                 var currLocation = gNumsLocations[l];
                 var currCell = gBoard[currLocation.i][currLocation.j];
                 if (currCell.isShown) continue;
@@ -310,7 +312,7 @@ function getHint(elCell, rowIdx, colIdx) {
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             if (j < 0 || j >= gBoard[0].length) continue;
             var currCell = gBoard[i][j];
-            if (currCell.isShown) continue;
+            if (currCell.isShown || currCell.isMarked) continue;
 
             if (currCell.isMine) content = MINE;
             else if (currCell.minesAroundCount > 0) content = currCell.minesAroundCount;
@@ -324,7 +326,7 @@ function getHint(elCell, rowIdx, colIdx) {
             for (var j = colIdx - 1; j <= colIdx + 1; j++) {
                 if (j < 0 || j >= gBoard[0].length) continue;
                 var currCell = gBoard[i][j];
-                if (currCell.isShown) continue;
+                if (currCell.isShown || currCell.isMarked) continue;
                 renderCell(i, j, HIDE);
             }
         }
