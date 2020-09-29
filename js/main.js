@@ -50,7 +50,7 @@ function init(isOnLoadInit) {
     gHint = 3;
     gElHint.innerHTML = 3;
     var elHint = document.querySelector('.hint');
-        elHint.classList.remove('click-on')
+    elHint.classList.remove('click-on')
     resetTimer()
     changeSmiley('😃')
     renderBoard(gBoard, '.board-container')
@@ -289,8 +289,6 @@ function safeClick() {
         )
         gSafeClick--;
         gElSafeClick.innerHTML = gSafeClick;
-        // console.log('gNumsLocations', gNumsLocations)
-
     }
 }
 

@@ -31,11 +31,10 @@ h1 {
     font-size: 20px;
 }
 
-
 .new-game:hover {
-    cursor: pointer;;
+    cursor: pointer;
+    ;
 }
-
 
 .timer {
     position: relative;
@@ -61,7 +60,7 @@ h1 {
     padding-top: 5px;
 }
 
-.lives{
+.lives {
     position: relative;
     /* background-color: rgb(208, 199, 60); */
     /* border-style: solid; */
@@ -74,7 +73,7 @@ h1 {
     padding-top: 5px;
 }
 
-.safe-click{
+.safe-click {
     position: relative;
     background-color: rgb(208, 199, 60);
     border-style: solid;
@@ -89,14 +88,15 @@ h1 {
 }
 
 .safe-click:hover {
-    cursor: pointer;;
+    cursor: pointer;
+    ;
 }
 
-.safe-click span{
+.safe-click span {
     font-size: large;
 }
 
-.hint{
+.hint {
     position: relative;
     background-color: rgb(208, 199, 60);
     border-style: solid;
@@ -111,15 +111,16 @@ h1 {
 }
 
 .hint:hover {
-    cursor: pointer;;
+    cursor: pointer;
+    ;
 }
 
-.hint span{
+.hint span {
     font-size: large;
 }
 
-.click-on{
-    background-color:red;
+.click-on {
+    background-color: red;
 }
 
 .board-container {
@@ -141,29 +142,33 @@ table {
 }
 
 .cell:hover {
-    cursor: pointer;;
+    cursor: pointer;
+    background-color: rgb(19, 207, 19);
 }
 
-/* .has-negs-{
+/* .has-negs shown{
     width: 40px;
     height: 40px;
     text-align: center;
     font-size: 25px;
     background-color: rgb(234 255 85);
-}
+    background-color: rgb(255 200 61);
+    background-color: rgb(208 199 60);
 
-.lone{
+} */
+
+/* .lone shown {
     width: 40px;
     height: 40px;
     text-align: center;
     font-size: 25px;
-    /* background-color: grey; */
-
-/* background-color: rgb(147 162 41) */
-
-/* background-color: rgb(234 255 85); */
-
-/* }  */
+    background-color: grey;
+    background-color: rgb(147 162 41);
+    background-color: rgb(254 205 115);
+    background-color: rgb(234 255 85);
+    background-color: rgb(208 199 60);
+    background-color: rgb(234 255 85);
+} */
 
 .modal-game-over {
     display: none;

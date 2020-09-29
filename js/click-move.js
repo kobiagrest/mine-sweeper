@@ -10,9 +10,6 @@ function rigthCellClicked(elCell, i, j) {
         content = MARK;
         gGame.markedCount++;
         renderCountMarked()
-        // console.log('gGame.markedCount',gGame.markedCount)
-        console.log('cellClicked', cellClicked) //למחוק
-        // console.log('gGame.rigthMarkedCount',gGame.rigthMarkedCount)
 
         if (cellClicked.isMine === true) {
             gGame.rigthMarkedCount++;
@@ -27,10 +24,7 @@ function rigthCellClicked(elCell, i, j) {
         cellClicked.isMarked = false;
         gGame.markedCount--;
         renderCountMarked()
-        // console.log('gGame.markedCount',gGame.markedCount)
-        console.log('cellClicked', cellClicked) //למחוק
-        // console.log('gGame.rigthMarkedCount',gGame.rigthMarkedCount)
-        
+
 
         if (cellClicked.isMine === true) {
             gGame.rigthMarkedCount--;
@@ -51,9 +45,9 @@ function renderCountMarked() {
 function cellClicked(elCell, i, j) {
     if (!gTimerInterval) gTimerInterval = startTimer('.timer', true);
     if (gGame.isOn === false) return;
-    if (gGame.isHint === true){
-        getHint(elCell,i,j); return;
-    } 
+    if (gGame.isHint === true) {
+        getHint(elCell, i, j); return;
+    }
 
     var cellClicked = gBoard[i][j];
 

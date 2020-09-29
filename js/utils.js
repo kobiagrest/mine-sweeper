@@ -12,7 +12,6 @@ function printContentBoard(board) {
 function drawLocation(locations) {
   return locations.shift();
 }
-//resetLocations(gBoard,rowIdx,colIdx)
 
 function resetLocations(board,rowIdx,colIdx) {
   var locations = []; 
